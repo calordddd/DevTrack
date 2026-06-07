@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import JobCard from '../components/JobCard';
 import LoadingSpinner from '../components/LoadingSpinner';
+import Modal from '../components/Modal';
 import { Search } from 'lucide-react';
 
 const JobSearch = () => {
@@ -9,6 +10,15 @@ const JobSearch = () => {
     const [loading, setLoading] = useState(false);
     const [query, setQuery] = useState('');
     const [actionLoading, setActionLoading] = useState(null);
+
+    // Modal state
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalConfig, setModalConfig] = useState({ title: '', message: '', type: 'success' });
+
+    const showModal = (title, message, type = 'success') => {
+        setModalConfig({ title, message, type });
+        setModalOpen(true);
+    };
 
     const searchJobs = async (e) => {
         if (e) e.preventDefault();
@@ -32,10 +42,10 @@ const JobSearch = () => {
         setActionLoading(job.external_job_id);
         try {
             await api.post('/saved-jobs', { job });
-            alert('Job saved successfully!');
+            showModal('Job Saved!', `"${job.job_title}" has been successfully added to your saved jobs.`, 'success');
         } catch (err) {
             console.error(err);
-            alert('Failed to save job');
+            showModal('Error', 'Failed to save this job listing. Please try again.', 'error');
         } finally {
             setActionLoading(null);
         }
@@ -45,10 +55,10 @@ const JobSearch = () => {
         setActionLoading(job.external_job_id);
         try {
             await api.post('/applications', { job, status: 'applied' });
-            alert('Application tracked successfully!');
+            showModal('Application Tracked!', `Successfully added "${job.job_title}" to your job applications!`, 'success');
         } catch (err) {
             console.error(err);
-            alert('Failed to track application');
+            showModal('Error', 'Failed to add application to tracker. Please try again.', 'error');
         } finally {
             setActionLoading(null);
         }
@@ -108,6 +118,14 @@ const JobSearch = () => {
                     )}
                 </div>
             )}
+
+            <Modal 
+                isOpen={modalOpen} 
+                onClose={() => setModalOpen(false)} 
+                title={modalConfig.title} 
+                message={modalConfig.message} 
+                type={modalConfig.type} 
+            />
         </div>
     );
 };

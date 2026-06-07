@@ -2,10 +2,20 @@ import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import JobCard from '../components/JobCard';
 import LoadingSpinner from '../components/LoadingSpinner';
+import Modal from '../components/Modal';
 
 const SavedJobs = () => {
     const [savedJobs, setSavedJobs] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    // Modal state
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalConfig, setModalConfig] = useState({ title: '', message: '', type: 'success' });
+
+    const showModal = (title, message, type = 'success') => {
+        setModalConfig({ title, message, type });
+        setModalOpen(true);
+    };
 
     const fetchSavedJobs = async () => {
         try {
@@ -35,9 +45,10 @@ const SavedJobs = () => {
         try {
             await api.post('/applications', { job: savedJob.job, status: 'applied' });
             await handleRemove(savedJob.id); // Remove from saved if tracked as applied
-            alert('Moved to Applications!');
+            showModal('Application Tracked!', `Successfully moved "${savedJob.job.job_title}" to your applications tracking list.`, 'success');
         } catch (err) {
             console.error(err);
+            showModal('Error', 'Failed to move application to tracker. Please try again.', 'error');
         }
     };
 
@@ -73,6 +84,14 @@ const SavedJobs = () => {
                     <p className="text-gray-500">You haven't saved any jobs yet.</p>
                 )}
             </div>
+
+            <Modal 
+                isOpen={modalOpen} 
+                onClose={() => setModalOpen(false)} 
+                title={modalConfig.title} 
+                message={modalConfig.message} 
+                type={modalConfig.type} 
+            />
         </div>
     );
 };
