@@ -20,6 +20,12 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        try {
+            \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\WelcomeMail($user));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Welcome email failed to send', ['error' => $e->getMessage()]);
+        }
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
