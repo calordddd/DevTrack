@@ -11,7 +11,7 @@ class JobController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->input('q', '');
+        $query = (string) ($request->input('q') ?? '');
         $jobs = $this->jobService->searchJobs($query);
 
         return response()->json(['data' => $jobs]);

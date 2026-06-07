@@ -35,10 +35,14 @@ return [
         ],
     ],
 
-    'adzuna' => [
-        'app_id' => env('ADZUNA_APP_ID'),
-        'app_key' => env('ADZUNA_APP_KEY'),
-        'country' => env('ADZUNA_COUNTRY', 'us'),
+
+
+    'jsearch' => [
+        'key' => env('JSEARCH_API_KEY'),
+        'country' => env('JSEARCH_COUNTRY', 'Philippines'),
+        'base_url' => env('JSEARCH_BASE_URL', 'https://api.openwebninja.com'),
     ],
+
+
 
 ];

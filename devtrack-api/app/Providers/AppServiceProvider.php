@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             \App\Services\JobServiceInterface::class,
-            \App\Services\AdzunaJobProvider::class
+            \App\Services\JsearchJobProvider::class
         );
     }
 
