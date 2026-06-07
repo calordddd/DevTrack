@@ -9,6 +9,8 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\DashboardController;
 
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register/send-code', [AuthController::class, 'sendCode']);
+Route::post('/register/verify-code', [AuthController::class, 'verifyCode']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
