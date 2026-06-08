@@ -1,0 +1,10 @@
+{
+  "name": "devtrack-workspace",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"php devtrack-api/artisan serve\" \"npm --prefix devtrack-frontend run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
