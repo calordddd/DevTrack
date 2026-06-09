@@ -1,16 +1,35 @@
-# React + Vite
+# DevTrack Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the React client application for DevTrack, built on top of React 19, Vite, Tailwind CSS 4, Axios, and Lucide React.
 
-Currently, two official plugins are available:
+## Directory Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+* **`src/pages/`**: Complete user views for the web application:
+  * `Login.jsx` & `Register.jsx`: Authentication views.
+  * `Dashboard.jsx`: User overview panel.
+  * `JobSearch.jsx`: Search & browse job listings.
+  * `Applications.jsx`: Status tracking for applied jobs.
+  * `SavedJobs.jsx`: Manage saved job listings.
+* **`src/components/`**: Reusable UI elements:
+  * `Layout.jsx`, `Navbar.jsx`, `Sidebar.jsx`: Base structure & navigation.
+  * `JobCard.jsx`, `ApplicationCard.jsx`: Cards presenting lists of jobs/applications.
+  * `DashboardStats.jsx`: Stats panel displaying dashboard statistics.
+  * `Modal.jsx`, `LoadingSpinner.jsx`: General-purpose modals and loading indicators.
+* **`src/services/`**: Integration services:
+  * `api.js`: Axios instance client configured to fetch from the Laravel REST API backend.
 
-## React Compiler
+## Available Scripts
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+In the `devtrack-frontend` directory, you can run:
 
-## Expanding the ESLint configuration
+### `npm run dev`
+Runs the app in development mode at [http://localhost:5173](http://localhost:5173).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### `npm run build`
+Builds the app for production in the `dist` folder.
+
+### `npm run lint`
+Runs ESLint to analyze static code warnings or issues.
+
+### `npm run preview`
+Preview the production build locally.
