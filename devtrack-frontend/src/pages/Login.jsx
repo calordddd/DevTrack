@@ -40,6 +40,11 @@ const Login = () => {
                             <input type="password" required className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" value={password} onChange={(e) => setPassword(e.target.value)} />
                         </div>
                     </div>
+                    <div className="flex items-center justify-end text-sm">
+                        <Link to="/forgot-password" className="font-medium text-primary hover:text-primary-dark transition-colors">
+                            Forgot your password?
+                        </Link>
+                    </div>
                     <div>
                         <button type="submit" disabled={loading} className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-70 transition-colors">
                             {loading ? 'Signing in...' : 'Sign in'}
