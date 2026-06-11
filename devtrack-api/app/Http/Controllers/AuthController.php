@@ -140,4 +140,64 @@ class AuthController extends Controller
     {
         return response()->json($request->user());
     }
+
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email|max:255|exists:users,email',
+        ]);
+
+        $email = $request->email;
+        $code = sprintf('%06d', mt_rand(100000, 999999));
+
+        Cache::put('password_reset_code_' . $email, $code, now()->addMinutes(15));
+        Log::info("Password reset code for {$email}: {$code}");
+
+        try {
+            Mail::to($email)->send(new \App\Mail\PasswordResetCodeMail($code));
+        } catch (\Exception $e) {
+            Log::error('Failed to send password reset code email', [
+                'email' => $email,
+                'error' => $e->getMessage()
+            ]);
+            return response()->json([
+                'message' => 'Password reset code generated (check logs if mail fails).',
+                'mail_error' => $e->getMessage()
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Password reset code sent successfully.'
+        ]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email|max:255|exists:users,email',
+            'code' => 'required|string|size:6',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $email = $request->email;
+        $code = $request->code;
+
+        $cachedCode = Cache::get('password_reset_code_' . $email);
+
+        if (!$cachedCode || $cachedCode !== $code) {
+            return response()->json([
+                'message' => 'Invalid or expired reset code.'
+            ], 422);
+        }
+
+        $user = User::where('email', $email)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        Cache::forget('password_reset_code_' . $email);
+
+        return response()->json([
+            'message' => 'Password reset successfully.'
+        ]);
+    }
 }
