@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
+    /**
+     * Register a new user after verifying their email.
+     *
+     * @param  \App\Http\Requests\RegisterRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register(RegisterRequest $request)
     {
         $email = $request->email;
@@ -51,6 +57,12 @@ class AuthController extends Controller
         ], 201);
     }
 
+    /**
+     * Generate and send a 6-digit email verification code for registration.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function sendCode(Request $request)
     {
         $request->validate([
@@ -82,6 +94,12 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Verify the registration email code and save confirmation to cache.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function verifyCode(Request $request)
     {
         $request->validate([
@@ -108,6 +126,12 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Authenticate user and issue Sanctum token.
+     *
+     * @param  \App\Http\Requests\LoginRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(LoginRequest $request)
     {
         $user = User::where('email', $request->email)->first();
@@ -127,6 +151,12 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Terminate the current user token session.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
@@ -136,11 +166,23 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Retrieve the currently logged in user profile.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function user(Request $request)
     {
         return response()->json($request->user());
     }
 
+    /**
+     * Generate and send a password reset code to user's email.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function forgotPassword(Request $request)
     {
         $request->validate([
@@ -171,6 +213,12 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Validate verification code and reset password.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function resetPassword(Request $request)
     {
         $request->validate([
