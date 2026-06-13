@@ -14,8 +14,8 @@ For a detailed walkthrough of the system architecture, database relationships, A
 
 ## Project Structure
 
-- **[devtrack-api](file:///c:/Users/cedri/Desktop/DevTrack/devtrack-api)**: Laravel 12 backend serving REST API endpoints.
-- **[devtrack-frontend](file:///c:/Users/cedri/Desktop/DevTrack/devtrack-frontend)**: React 19 + Vite + Tailwind CSS frontend application.
+- **[devtrack-api](file:///c:/Users/Calo/Desktop/DevTrack/devtrack-api)**: Laravel 12 backend serving REST API endpoints.
+- **[devtrack-frontend](file:///c:/Users/Calo/Desktop/DevTrack/devtrack-frontend)**: React 19 + Vite + Tailwind CSS frontend application.
 
 ---
 
