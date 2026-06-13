@@ -2,6 +2,16 @@
 
 Welcome to **DevTrack**, a job listing and tracking platform. This workspace consists of a Laravel API backend and a Vite-based React frontend.
 
+---
+
+## 📖 System Architecture & Guide
+
+For a detailed walkthrough of the system architecture, database relationships, API endpoints, core workflows (e.g. Email Verification, Forgot Password), and frontend components, please refer to the:
+
+👉 **[DevTrack System Guide (SYSTEM_GUIDE.md)](./SYSTEM_GUIDE.md)**
+
+---
+
 ## Project Structure
 
 - **[devtrack-api](file:///c:/Users/cedri/Desktop/DevTrack/devtrack-api)**: Laravel 12 backend serving REST API endpoints.
